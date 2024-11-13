@@ -7,7 +7,7 @@ export default function RootLayout() {
   return (
     <>
       <Head>
-        <link rel="icon" type="image/jpeg" href="/assets/yamada_ryo.jpg" />
+        <link rel="icon" type="image/jpeg" href="/assets/images/yamada_ryo.jpg" />
       </Head>
       <StatusBar style="light" />
       <Stack>

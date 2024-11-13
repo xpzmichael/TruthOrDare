@@ -4,6 +4,11 @@ export const IndexColors = {
   BACKGROUND_DARK: '#a0a0a0',
 }
 
+export const LibraryColors = {
+  BACKGROUND: '#f8f8f8',
+  BACKGROUND_DARK: '#a0a0a0',
+}
+
 
 // Colors for TabsLayout.tsx
 export const TabsLayoutColors = {
@@ -50,8 +55,8 @@ export const OptionPickerColors = {
 }
 
 export const QuestionLibraryColors = {
-  TRUTH_BUTTON: "#b87fe8",
-  DARE_BUTTON: "#e8bb7f",
+  TRUTH_BUTTON: "#b679ff",
+  DARE_BUTTON: "#ffc167",
 }
 
 export const ChatBubbleColors = {

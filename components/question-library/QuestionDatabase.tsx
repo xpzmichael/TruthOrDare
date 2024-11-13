@@ -1,13 +1,25 @@
 import { TruthQuestionType } from '@/constants/SettingsEnums';
+import { DareHardness } from '@/constants/SettingsEnums';
+import { getRandomQuestions } from './QuestionUtils';
 
 const DEVIDER_LINE_MAX_LENGTH = 5;
+
 class QuestionDatabase {
   private static instance: QuestionDatabase;
-  private mild: string[] = [];
-  private average: string[] = [];
-  private sensitive: string[] = [];
 
-  private constructor() {}
+  private truthQuestionsMap: Map<TruthQuestionType, string[]> = new Map();
+  private dareQuestionsMap: Map<DareHardness, string[]> = new Map();
+
+  private constructor() {
+    this.initializeQuestionsMap(this.truthQuestionsMap, TruthQuestionType);
+    this.initializeQuestionsMap(this.dareQuestionsMap, DareHardness);
+  }
+
+  private initializeQuestionsMap<T>(map: Map<T, string[]>, enumType: Record<string, T> ): void {
+    Object.values(enumType).forEach((category: T) => {
+      map.set(category, []);
+    });
+  }
 
   public static getInstance(): QuestionDatabase {
     if (!QuestionDatabase.instance) {
@@ -21,58 +33,46 @@ class QuestionDatabase {
     const fileContent = await response.text();
     const lines = fileContent.split('\n');
     let i = 1;
-    while (lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
-      this.mild.push(lines[i]);
-      i++;
+
+    for (let category of Object.values(TruthQuestionType)) {
+      while (lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
+        const questions = this.truthQuestionsMap.get(category);
+        if (questions) {
+          questions.push(lines[i]);
+        }
+        i++;
+      }
+      while (lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
+        i++;
+      }
     }
-    while (lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
-      i++;
-    }
-    while (lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
-      this.average.push(lines[i]);
-      i++;
-    }
-    while (lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
-      i++;
-    }
-    while (lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
-      this.sensitive.push(lines[i]);
-      i++;
+
+    for (let category of Object.values(DareHardness)) {
+      while (i < lines.length && lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
+        const questions = this.dareQuestionsMap.get(category);
+        if (questions) {
+          questions.push(lines[i]);
+        }
+        i++;
+      }
+      while (i < lines.length && lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
+        i++;
+      }
     }
   }
 
-  public getRandomQuestions(questionType: TruthQuestionType, questionsNeeded: number): string[] {
-    const mildCount = this.mild.length;
-    const averageCount = this.average.length;
-    const sensitiveCount = this.sensitive.length;
+  public getTruthQuestions(questionType: TruthQuestionType, questionsNeeded: number): string[] {
+    return getRandomQuestions(questionType, questionsNeeded, 
+      this.truthQuestionsMap.get(TruthQuestionType.Mild) || [], 
+      this.truthQuestionsMap.get(TruthQuestionType.Medium) || [], 
+      this.truthQuestionsMap.get(TruthQuestionType.Sensitive) || []);
+  }
 
-    const result = new Set<string>();
-
-    let sum = 0;
-
-    if (questionType === TruthQuestionType.Mild) {
-      sum = mildCount;
-    } else if (questionType === TruthQuestionType.Average) {
-      sum = mildCount + averageCount;
-    } else {
-      sum = mildCount + averageCount + sensitiveCount;
-    }
-
-    while (result.size < questionsNeeded && result.size < sum) {
-      let randomNum = Math.floor(Math.random() * sum);
-      let question: string;
-
-      if (randomNum < mildCount) {
-        question = this.mild[randomNum];
-      } else if (randomNum < mildCount + averageCount) {
-        question = this.average[randomNum - mildCount];
-      } else {
-        question = this.sensitive[randomNum - mildCount - averageCount];
-      }
-
-      result.add(question);
-    }
-    return Array.from(result);
+  public getDareQuestions(dareType: DareHardness, questionsNeeded: number): string[] {
+    return getRandomQuestions(dareType, questionsNeeded, 
+      this.dareQuestionsMap.get(DareHardness.Easy) || [], 
+      this.dareQuestionsMap.get(DareHardness.Medium) || [], 
+      this.dareQuestionsMap.get(DareHardness.Hard) || []);
   }
 }
 

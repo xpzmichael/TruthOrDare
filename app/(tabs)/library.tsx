@@ -6,20 +6,22 @@ import {
   Animated,
   ScrollView,
 } from 'react-native';
-import { useSettings } from '@/hooks/SettingsContext';
-import QuestionButton from '@/components/question-library/QuestionButton';
-import { QuestionLibraryColors } from '@/constants/Colors';
-import ChatBubble from '@/components/question-library/ChatBubble';
-import useSizeRatio from '@/hooks/UseSizeRatio';
 import QuestionDisplayer from '@/components/question-library/QuestionDisplayer';
+import TruthButton from '@/components/question-library/TruthButton';
+import DareButton from '@/components/question-library/DareButton';
+import { useSettings } from '@/hooks/SettingsContext';
+import { Theme } from '@/constants/SettingsEnums';
+
+
 
 export default function LibraryScreen() {
+  const {theme} = useSettings();
   return (
-    <View className='relative flex-1'>
+    <View className={`relative flex-1 ${theme==Theme.Dark ? 'bg-library-bg-dark':'bg-library-bg'}`}>
       <QuestionDisplayer />
       <View className='absolute px-6 w-full flex-row justify-between bottom-10'>
-        <QuestionButton color={QuestionLibraryColors.TRUTH_BUTTON} label='Truth' />
-        <QuestionButton color={QuestionLibraryColors.DARE_BUTTON} label='Dare' />
+        <TruthButton/>
+        <DareButton/>
       </View>
     </View>
   );

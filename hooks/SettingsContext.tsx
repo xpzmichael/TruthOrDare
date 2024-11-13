@@ -21,14 +21,14 @@ const SettingsContext = createContext<Settings | undefined>(undefined);
 export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [players, setPlayers] = useState<number>(0);
   const [spinSpeed, setSpinSpeed] = useState<SpinSpeed>(SpinSpeed.Normal);
-  const [truthQuestionType, setTruthQuestionType] = useState<TruthQuestionType>(TruthQuestionType.Average);
-  const [dareHardness, setDareHardness] = useState<DareHardness>(DareHardness.Average);
+  const [truthQuestionType, setTruthQuestionType] = useState<TruthQuestionType>(TruthQuestionType.Medium);
+  const [dareHardness, setDareHardness] = useState<DareHardness>(DareHardness.Medium);
   const [theme, setTheme] = useState<Theme>(Theme.Light);
 
   const resetSettings = () => {
     setSpinSpeed(SpinSpeed.Normal);
-    setTruthQuestionType(TruthQuestionType.Average);
-    setDareHardness(DareHardness.Average);
+    setTruthQuestionType(TruthQuestionType.Medium);
+    setDareHardness(DareHardness.Medium);
     setTheme(Theme.Light);
   };
 

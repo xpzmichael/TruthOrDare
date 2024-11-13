@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const { SettingsColors, IndexColors, TabsLayoutColors, StartButtonColors, SpinnerColors, ResultDisplayerColors, OptionPickerColors } = require('./constants/Colors.ts');
+const { SettingsColors, IndexColors, TabsLayoutColors, StartButtonColors, SpinnerColors, ResultDisplayerColors, OptionPickerColors, LibraryColors } = require('./constants/Colors.ts');
 
 module.exports = {
   content: [
@@ -24,6 +24,10 @@ module.exports = {
         // Index colors
         'index-bg': IndexColors.BACKGROUND,
         'index-bg-dark': IndexColors.BACKGROUND_DARK,
+
+        // Library colors
+        'library-bg': LibraryColors.BACKGROUND,
+        'library-bg-dark': LibraryColors.BACKGROUND_DARK,
 
         // TabsLayout colors
         'tab-bar-active-tint': TabsLayoutColors.TAB_BAR_ACTIVE_TINT,

@@ -7,13 +7,13 @@ export enum SpinSpeed {
 
 export enum TruthQuestionType {
   Mild = 'Mild',
-  Average = 'Average',
+  Medium = 'Medium',
   Sensitive = 'Sensitive'
 }
 
 export enum DareHardness {
   Easy = 'Easy',
-  Average = 'Average',
+  Medium = 'Medium',
   Hard = 'Hard'
 }
 

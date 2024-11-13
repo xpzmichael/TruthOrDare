@@ -1,10 +1,13 @@
 import QuestionDatabase from "@/components/question-library/QuestionDatabase";
-import { TruthQuestionType } from "@/constants/SettingsEnums";
+import { DareHardness, TruthQuestionType } from "@/constants/SettingsEnums";
+
+type QuestionConsumer = (questions: string[]) => void;
 
 class QuestionManager {
   private static instance: QuestionManager;
-  private questions: string[] = [];
   private numOfQuestions: number;
+  private questionConsumer?: QuestionConsumer;
+  private questionDatabase: QuestionDatabase = QuestionDatabase.getInstance();
 
   private constructor(numOfQuestions: number = 3) {
     this.numOfQuestions = numOfQuestions;
@@ -13,7 +16,7 @@ class QuestionManager {
   public static getInstance(): QuestionManager {
     if (!QuestionManager.instance) {
       QuestionManager.instance = new QuestionManager();
-      QuestionManager.instance.initializeQuestions('./assets/questions/Truth.txt');
+      QuestionManager.instance.initializeQuestions('./assets/questions/Questions.txt');
     }
     return QuestionManager.instance;
   }
@@ -23,16 +26,25 @@ class QuestionManager {
     await questionDatabase.initializeQuestions(filePath);
   }
 
-  public updateQuestions(truthQuestionType: TruthQuestionType): void {
-    console.log("updating questions");
-    const questionDatabase = QuestionDatabase.getInstance();
-    this.questions = questionDatabase.getRandomQuestions(truthQuestionType, this.numOfQuestions);
-    
+  
+  public popTruthQuestions(truthQuestionType: TruthQuestionType): void {
+    if (this.questionConsumer) {
+      this.questionConsumer(this.questionDatabase.getTruthQuestions(truthQuestionType, this.numOfQuestions));
+    } else {
+      console.log('QuestionDisplayer not subscribed to QuestionManager');
+    }
   }
 
-  public getQuestions(): string[] {
-    console.log(this.questions);
-    return this.questions;
+  public popDareQuestions(dareHardness: DareHardness): void {
+    if (this.questionConsumer) {
+      this.questionConsumer(this.questionDatabase.getDareQuestions(dareHardness, this.numOfQuestions));
+    } else {
+      console.log('QuestionDisplayer not subscribed to QuestionManager');
+    }
+  }
+
+  public subscribe(setQuestions: QuestionConsumer): void {
+    this.questionConsumer = setQuestions;
   }
 }
 
