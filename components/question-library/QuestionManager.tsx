@@ -16,7 +16,6 @@ class QuestionManager {
   public static getInstance(): QuestionManager {
     if (!QuestionManager.instance) {
       QuestionManager.instance = new QuestionManager();
-      QuestionManager.instance.initializeQuestions('./assets/questions/Questions.txt');
     }
     return QuestionManager.instance;
   }
@@ -27,17 +26,17 @@ class QuestionManager {
   }
 
   
-  public popTruthQuestions(truthQuestionType: TruthQuestionType): void {
+  public popTruthQuestions(truthQuestionType: TruthQuestionType, numOfTruth: number): void {
     if (this.questionConsumer) {
-      this.questionConsumer(this.questionDatabase.getTruthQuestions(truthQuestionType, this.numOfQuestions));
+      this.questionConsumer(this.questionDatabase.getTruthQuestions(truthQuestionType, numOfTruth));
     } else {
       console.log('QuestionDisplayer not subscribed to QuestionManager');
     }
   }
 
-  public popDareQuestions(dareHardness: DareHardness): void {
+  public popDareQuestions(dareHardness: DareHardness, numOfDare: number): void {
     if (this.questionConsumer) {
-      this.questionConsumer(this.questionDatabase.getDareQuestions(dareHardness, this.numOfQuestions));
+      this.questionConsumer(this.questionDatabase.getDareQuestions(dareHardness, numOfDare));
     } else {
       console.log('QuestionDisplayer not subscribed to QuestionManager');
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import ResultDisplayer from './ResultDisplayer';
 import Spinner from './Spinner';
 import StartButton from './StartButton';
@@ -34,7 +34,7 @@ const SpinnerGame: React.FC<SpinnerGameProps> = ({ numElements }) => {
     let timeout: NodeJS.Timeout;
     let delay = initialDelay;
     const delayIncrement = 1 + 0.8 / numElements;
-    let numIterations = Math.random() * (numElements - 1) + numElements * 2;
+    let numIterations = Math.random() * (numElements - 1) + (numElements - 1) * 2;
 
     if (isSpinning) {
       const spin = () => {

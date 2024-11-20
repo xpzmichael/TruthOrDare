@@ -1,14 +1,14 @@
-import { SpinSpeed } from "@/constants/SettingsEnums";
+import { SpinSpeed, SpinSpeeds } from "@/constants/SettingsEnums";
 
 export function getSpinnerDelay(spinSpeed: SpinSpeed) {
   switch (spinSpeed) {
-    case SpinSpeed.Slow:
-      return 100;
-    case SpinSpeed.Normal:
-      return 80;
-    case SpinSpeed.Fast:
-      return 60;
-    case SpinSpeed.VeryFast:
-      return 40;
+    case SpinSpeeds.Slow:
+      return 120;
+    case SpinSpeeds.Normal:
+      return 90;
+    case SpinSpeeds.Fast:
+      return 70;
+    case SpinSpeeds.VeryFast:
+      return 50;
   }
 }

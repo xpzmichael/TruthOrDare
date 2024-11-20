@@ -1,0 +1,41 @@
+{
+    "truthOrDare": "Truth or Dare",
+    "game": "Game",
+    "library": "Library",
+    "settings": "Settings",
+
+    "pleaseSelectLanguage": "Please Select a Language",
+    "alertPlayerCount": "at Least 3 Players are needed to start the game",
+
+    "language": "Language",
+    "rouletteSpinSpeed": "Roulette Spin Speed",
+    "truthQuestionLevel": "Truth Question Level",
+    "dareQuestionLevel": "Dare Question Level",
+    "numOfTruthOptions": "Number of Truth Options",
+    "numOfDareOptions": "Number of Dare Options",
+    "theme": "Theme",
+
+    "enterNumPlayers": "Please enter the number of Players",
+
+    "start": "Start",
+    "spinning...": "Spinning...",
+
+    "truth": "Truth",
+    "dare": "Dare",
+
+    "questionLibrary": "Question Library",
+    "slow" : "Slow",
+    "normal" : "Normal",
+    "fast" : "Fast",
+    "veryFast" : "Very Fast",
+    "mild" : "Mild",
+    "medium" : "Medium",
+    "sensitive" : "Sensitive",
+    "easy" : "Easy",
+    "hard" : "Hard",
+    "light" : "Light",
+    "dark" : "Dark",
+    "resetPlayers": "Reset Players",
+    "resetSettings": "Reset Settings",
+    "questionPlaceholder": "Press \"Truth\" or \"Dare\" to get a question!"
+}

@@ -1,0 +1,41 @@
+{
+    "truthOrDare": "真心话大冒险",
+    "game": "游戏",
+    "library": "题库",
+    "settings": "设置",
+
+    "pleaseSelectLanguage": "请选择您的语言",
+    "alertPlayerCount": "至少需要3名玩家才能开始游戏",
+
+    "language": "语言",
+    "rouletteSpinSpeed": "转盘旋转速度",
+    "truthQuestionLevel": "真心话问题难度",
+    "dareQuestionLevel": "大冒险问题难度",
+    "numOfTruthOptions": "真心话选项数量",
+    "numOfDareOptions": "大冒险选项数量",
+    "theme": "主题",
+
+    "enterNumPlayers": "请输入玩家数量",
+
+    "start": "开始",
+    "spinning...": "旋转中...",
+
+    "truth": "真心话",
+    "dare": "大冒险",
+
+    "questionLibrary": "题库",
+    "slow" : "慢",
+    "normal" : "普通",
+    "fast" : "快",
+    "veryFast" : "很快",
+    "mild" : "轻松",
+    "medium" : "中等",
+    "sensitive" : "敏感",
+    "easy" : "简单",
+    "hard" : "困难",
+    "light" : "浅色",
+    "dark" : "深色",
+    "resetPlayers": "重置玩家数量",
+    "resetSettings": "重置设置",
+    "questionPlaceholder": "点击\"真心话\"或\"大冒险\"以抽取问题!"
+}

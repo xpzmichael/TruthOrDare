@@ -1,5 +1,5 @@
-import { TruthQuestionType } from '@/constants/SettingsEnums';
-import { DareHardness } from '@/constants/SettingsEnums';
+import { TruthQuestionType, TruthQuestionTypes } from '@/constants/SettingsEnums';
+import { DareHardness, DareHardnesses } from '@/constants/SettingsEnums';
 import { getRandomQuestions } from './QuestionUtils';
 
 const DEVIDER_LINE_MAX_LENGTH = 5;
@@ -11,12 +11,12 @@ class QuestionDatabase {
   private dareQuestionsMap: Map<DareHardness, string[]> = new Map();
 
   private constructor() {
-    this.initializeQuestionsMap(this.truthQuestionsMap, TruthQuestionType);
-    this.initializeQuestionsMap(this.dareQuestionsMap, DareHardness);
+    this.initializeQuestionsMap(this.truthQuestionsMap, TruthQuestionTypes);
+    this.initializeQuestionsMap(this.dareQuestionsMap, DareHardnesses);
   }
 
-  private initializeQuestionsMap<T>(map: Map<T, string[]>, enumType: Record<string, T> ): void {
-    Object.values(enumType).forEach((category: T) => {
+  private initializeQuestionsMap<T>(map: Map<T, string[]>, questionType: Record<string, T> ): void {
+    Object.values(questionType).forEach((category: T) => {
       map.set(category, []);
     });
   }
@@ -30,24 +30,34 @@ class QuestionDatabase {
 
   public async initializeQuestions(filePath: string): Promise<void> {
     const response = await fetch(filePath);
+    console.log("initializeQuestions");
     const fileContent = await response.text();
     const lines = fileContent.split('\n');
     let i = 1;
 
-    for (let category of Object.values(TruthQuestionType)) {
-      while (lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
+    // Clear the questions for each category for Truth and Dare
+    this.truthQuestionsMap.forEach((_, key) => {
+      this.truthQuestionsMap.set(key, []);
+    });
+
+    this.dareQuestionsMap.forEach((_, key) => {
+      this.dareQuestionsMap.set(key, []);
+    });
+    
+    for (let category of Object.values(TruthQuestionTypes)) {
+      while (i < lines.length && lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
         const questions = this.truthQuestionsMap.get(category);
         if (questions) {
           questions.push(lines[i]);
         }
         i++;
       }
-      while (lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
+      while (i < lines.length && lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
         i++;
       }
     }
 
-    for (let category of Object.values(DareHardness)) {
+    for (let category of Object.values(DareHardnesses)) {
       while (i < lines.length && lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
         const questions = this.dareQuestionsMap.get(category);
         if (questions) {
@@ -63,16 +73,16 @@ class QuestionDatabase {
 
   public getTruthQuestions(questionType: TruthQuestionType, questionsNeeded: number): string[] {
     return getRandomQuestions(questionType, questionsNeeded, 
-      this.truthQuestionsMap.get(TruthQuestionType.Mild) || [], 
-      this.truthQuestionsMap.get(TruthQuestionType.Medium) || [], 
-      this.truthQuestionsMap.get(TruthQuestionType.Sensitive) || []);
+      this.truthQuestionsMap.get(TruthQuestionTypes.Mild) || [], 
+      this.truthQuestionsMap.get(TruthQuestionTypes.Medium) || [], 
+      this.truthQuestionsMap.get(TruthQuestionTypes.Sensitive) || []);
   }
 
   public getDareQuestions(dareType: DareHardness, questionsNeeded: number): string[] {
     return getRandomQuestions(dareType, questionsNeeded, 
-      this.dareQuestionsMap.get(DareHardness.Easy) || [], 
-      this.dareQuestionsMap.get(DareHardness.Medium) || [], 
-      this.dareQuestionsMap.get(DareHardness.Hard) || []);
+      this.dareQuestionsMap.get(DareHardnesses.Easy) || [], 
+      this.dareQuestionsMap.get(DareHardnesses.Medium) || [], 
+      this.dareQuestionsMap.get(DareHardnesses.Hard) || []);
   }
 }
 

@@ -1,23 +1,33 @@
-export enum SpinSpeed {
-  Slow = 'Slow',
-  Normal = 'Normal',
-  Fast = 'Fast',
-  VeryFast = 'Very Fast'
-}
+import { DARK, EASY, FAST, HARD, LIGHT, MEDIUM, MILD, NORMAL, SENSITIVE, SLOW, VERY_FAST } from "./TranslationKeys";
 
-export enum TruthQuestionType {
-  Mild = 'Mild',
-  Medium = 'Medium',
-  Sensitive = 'Sensitive'
-}
+// Settings for Spin Speed
+export const SpinSpeeds = {
+  Slow: SLOW,
+  Normal: NORMAL,
+  Fast: FAST,
+  VeryFast: VERY_FAST,
+} as const;
+export type SpinSpeed = typeof SpinSpeeds[keyof typeof SpinSpeeds];
 
-export enum DareHardness {
-  Easy = 'Easy',
-  Medium = 'Medium',
-  Hard = 'Hard'
-}
+// Settings for Truth Questions
+export const TruthQuestionTypes = {
+  Mild: MILD,
+  Medium: MEDIUM,
+  Sensitive: SENSITIVE,
+} as const;
+export type TruthQuestionType = typeof TruthQuestionTypes[keyof typeof TruthQuestionTypes];
 
-export enum Theme {
-  Light = 'Light',
-  Dark = 'Dark'
-}
+// Settings for Dare Hardness
+export const DareHardnesses = {
+  Easy: EASY,
+  Medium: MEDIUM,
+  Hard: HARD,
+} as const;
+export type DareHardness = typeof DareHardnesses[keyof typeof DareHardnesses];
+
+// Settings for Themes
+export const Themes = {
+  Light: LIGHT,
+  Dark: DARK,
+} as const;
+export type Theme = typeof Themes[keyof typeof Themes];

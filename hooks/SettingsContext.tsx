@@ -1,11 +1,15 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { SpinSpeed, TruthQuestionType, DareHardness, Theme } from '@/constants/SettingsEnums';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { SpinSpeed, TruthQuestionType, DareHardness, Theme, SpinSpeeds, TruthQuestionTypes, DareHardnesses, Themes } from '@/constants/SettingsEnums';
+import i18n, { getLanguageSetting } from '@/locales/i18n';
+import QuestionManager from '@/components/question-library/QuestionManager';
 
 type Settings = {
+  language: string;
   spinSpeed: SpinSpeed;
   truthQuestionType: TruthQuestionType;
   dareHardness: DareHardness;
   theme: Theme;
+  setLanguage: (language: string) => void;
   setSpinSpeed: (speed: SpinSpeed) => void;
   setTruthQuestionType: (type: TruthQuestionType) => void;
   setDareHardness: (hardness: DareHardness) => void;
@@ -14,22 +18,38 @@ type Settings = {
   players: number;
   setPlayers: (count: number) => void;
   resetPlayers: () => void;
+  numOfTruth: number;
+  setNumOfTruth: (numOfThuth: number) => void;
+  numOfDare: number;
+  setNumOfDare: (numOfThuth: number) => void;
 };
 
 const SettingsContext = createContext<Settings | undefined>(undefined);
 
 export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [language, setLanguage] = useState<string>('English');
   const [players, setPlayers] = useState<number>(0);
-  const [spinSpeed, setSpinSpeed] = useState<SpinSpeed>(SpinSpeed.Normal);
-  const [truthQuestionType, setTruthQuestionType] = useState<TruthQuestionType>(TruthQuestionType.Medium);
-  const [dareHardness, setDareHardness] = useState<DareHardness>(DareHardness.Medium);
-  const [theme, setTheme] = useState<Theme>(Theme.Light);
+  const [spinSpeed, setSpinSpeed] = useState<SpinSpeed>(SpinSpeeds.Normal);
+  const [truthQuestionType, setTruthQuestionType] = useState<TruthQuestionType>(TruthQuestionTypes.Medium);
+  const [dareHardness, setDareHardness] = useState<DareHardness>(DareHardnesses.Medium);
+  const [theme, setTheme] = useState<Theme>(Themes.Light);
+  const [numOfTruth, setNumOfTruth] = useState<number>(3);
+  const [numOfDare, setNumOfDare] = useState<number>(3);
+
+  useEffect(() => {
+    console.log('Language switched:', language);
+    const varLan = getLanguageSetting(language);
+    i18n.changeLanguage(varLan);
+    QuestionManager.getInstance().initializeQuestions(`./assets/questions/Questions-${varLan}.txt`);
+  }, [language]);
 
   const resetSettings = () => {
-    setSpinSpeed(SpinSpeed.Normal);
-    setTruthQuestionType(TruthQuestionType.Medium);
-    setDareHardness(DareHardness.Medium);
-    setTheme(Theme.Light);
+    setSpinSpeed(SpinSpeeds.Normal);
+    setTruthQuestionType(TruthQuestionTypes.Medium);
+    setDareHardness(DareHardnesses.Medium);
+    setTheme(Themes.Light);
+    setNumOfTruth(3);
+    setNumOfDare(3);
   };
 
   const resetPlayers = () => {
@@ -39,10 +59,12 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
   return (
     <SettingsContext.Provider
       value={{
+        language,
         spinSpeed,
         truthQuestionType,
         dareHardness,
         theme,
+        setLanguage,
         setSpinSpeed,
         setTruthQuestionType,
         setDareHardness,
@@ -51,6 +73,10 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
         players,
         setPlayers,
         resetPlayers,
+        numOfTruth,
+        setNumOfTruth,
+        numOfDare,
+        setNumOfDare,
       }}
     >
       {children}

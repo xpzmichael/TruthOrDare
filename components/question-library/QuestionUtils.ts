@@ -1,4 +1,4 @@
-import { DareHardness, TruthQuestionType } from '@/constants/SettingsEnums';
+import { DareHardness, DareHardnesses, TruthQuestionType, TruthQuestionTypes } from '@/constants/SettingsEnums';
 
 const DEVIDER_LINE_MAX_LENGTH = 5;
 
@@ -40,12 +40,12 @@ export function getRandomQuestions(questionType: TruthQuestionType | DareHardnes
 
   let sum = 0;
 
-  if (questionType === TruthQuestionType.Mild || questionType === DareHardness.Easy) {
+  if (questionType === TruthQuestionTypes.Mild || questionType === DareHardnesses.Easy) {
     sum = tier1Count;
-  } else if (questionType === TruthQuestionType.Medium || questionType === DareHardness.Medium) {
-    sum = tier1Count + tier2Count;
-  } else {
+  } else if (questionType === TruthQuestionTypes.Sensitive || questionType === DareHardnesses.Hard) {
     sum = tier1Count + tier2Count + tier3Count;
+  } else {
+    sum = tier1Count + tier2Count;
   }
 
   while (result.size < questionsNeeded && result.size < sum) {

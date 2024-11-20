@@ -20,7 +20,14 @@ const useSizeRatio = () => {
     return () => subscription?.remove();
   }, []);
 
-  return Math.min(windowSize.width, windowSize.height) / 350;
+
+  let shortSide = windowSize.width;
+  if (windowSize.width < windowSize.height) {
+    shortSide = Math.min(windowSize.width, windowSize.height / 2);
+  } else {
+    shortSide = Math.min(windowSize.height, windowSize.width / 2);
+  }
+  return shortSide / 350;
 };
 
 export default useSizeRatio;

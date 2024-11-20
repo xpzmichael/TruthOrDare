@@ -6,14 +6,17 @@ import {
   Button,
   Modal,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { ENTER_NUM_PLAYERS } from '@/constants/TranslationKeys';
 
 type Props = {
   visible: boolean;
   onInitialize: (numPlayers: string) => void;
 }
 
-const InitializeGame = ({ visible, onInitialize} : Props) => {
+const GameInitializer = ({ visible, onInitialize} : Props) => {
   const [numPlayers, setNumPlayers] = useState<string>('');
+  const { t } = useTranslation();
 
   const handleStartGame = () => {
     onInitialize(numPlayers);
@@ -23,13 +26,12 @@ const InitializeGame = ({ visible, onInitialize} : Props) => {
     <Modal
       visible={visible}
       transparent={true}
-      animationType="slide"
+      animationType="none"
       onRequestClose={() => {}}
     >
       <View className="flex-1 justify-center bg-[rgba(0,0,0,0.5)]">
         <View className="m-5 bg-white rounded-lg p-9 items-center elevation-5">
-          <Text className="text-lg mb-4">Initialize Game</Text>
-          <Text>Number of Players:</Text>
+          <Text className="text-lg mb-4">{t(ENTER_NUM_PLAYERS)}</Text>
           <TextInput
             className="border w-full p-2 my-2 rounded text-center"
             keyboardType="number-pad"
@@ -44,4 +46,4 @@ const InitializeGame = ({ visible, onInitialize} : Props) => {
   );
 };
 
-export default InitializeGame;
+export default GameInitializer;

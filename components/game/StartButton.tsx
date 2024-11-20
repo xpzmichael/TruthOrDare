@@ -1,6 +1,10 @@
 import { StartButtonColors } from '@/constants/Colors';
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import useSizeRatio from '@/hooks/UseSizeRatio';
+import { SPINNING, START } from '@/constants/TranslationKeys';
+
 
 interface StartButtonProps {
   isSpinning: boolean;
@@ -8,12 +12,14 @@ interface StartButtonProps {
 }
 
 const StartButton: React.FC<StartButtonProps> = ({ isSpinning, onPress }) => {
+  const { t } = useTranslation();
+  const sizeRatio = useSizeRatio();
   return (
     <TouchableOpacity
       className="flex items-center mt-5 mb-2 rounded-md bg-start-button-bg"
       style={{
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: 10 * sizeRatio,
+        paddingHorizontal: 20 * sizeRatio,
       }}
       onPress={onPress}
       disabled={isSpinning}
@@ -21,10 +27,10 @@ const StartButton: React.FC<StartButtonProps> = ({ isSpinning, onPress }) => {
       <Text
         className="font-bold text-start-button-text"
         style={{
-          fontSize: 16,
+          fontSize: 16 * sizeRatio,
         }}
       >
-        {isSpinning ? 'Spinning...' : 'Start'}
+        {isSpinning ? t(SPINNING) : t(START)}
       </Text>
     </TouchableOpacity>
   );

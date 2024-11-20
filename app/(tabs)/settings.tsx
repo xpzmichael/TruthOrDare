@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-import OptionPicker from '@/components/settings/OptionPicker';
+import { View, Text, Button, ScrollView } from 'react-native';
+import OptionPicker from '@/components/OptionPicker';
 import { useSettings } from '@/hooks/SettingsContext';
+import { useTranslation } from 'react-i18next';
 import { SettingsColors } from '@/constants/Colors';
-import { SpinSpeed, TruthQuestionType, DareHardness, Theme } from '@/constants/SettingsEnums';
+import { Themes, SpinSpeeds, TruthQuestionTypes, DareHardnesses } from '@/constants/SettingsEnums';
+import { SETTINGS, ROULETTE_SPIN_SPEED, TRUTH_QUESTION_LEVEL, DARE_QUESTION_LEVEL, NUM_OF_TRUTH, NUM_OF_DARE, THEME, LANGUAGE, RESET_PLAYERS, RESET_SETTINGS } from '@/constants/TranslationKeys';
 
 const SettingsScreen: React.FC = () => {
   const {
+    language,
+    setLanguage,
     spinSpeed,
     setSpinSpeed,
     truthQuestionType,
@@ -16,49 +20,73 @@ const SettingsScreen: React.FC = () => {
     theme,
     setTheme,
     resetSettings,
-    resetPlayers
+    resetPlayers,
+    numOfTruth,
+    setNumOfTruth,
+    numOfDare,
+    setNumOfDare,
   } = useSettings();
 
-  return (
-    <View className={`flex-1 p-5 ${theme === Theme.Dark ? 'bg-settings-container-bg-dark' : 'bg-settings-container-bg'}`}>
-      <Text className="text-2xl font-bold mb-5 text-center text-settings-title">Settings</Text>
+  const { t } = useTranslation();
 
-      <Text className="text-lg font-medium mt-3 mb-2 text-settings-label">Spin Speed</Text>
+  return (
+    <ScrollView className={`flex-1 p-5 ${theme === Themes.Dark ? 'bg-settings-container-bg-dark' : 'bg-settings-container-bg'}`}>
+      <Text className="text-2xl font-bold mb-5 text-center text-settings-title">{t(SETTINGS)}</Text>
+
       <OptionPicker
-        options={Object.values(SpinSpeed)}
+        options={Object.values(SpinSpeeds)}
         selectedOption={spinSpeed}
         onSelect={setSpinSpeed}
+        title={t(ROULETTE_SPIN_SPEED)}
       />
-
-      <Text className="text-lg font-medium mt-3 mb-2 text-settings-label">Truth Question Type</Text>
       <OptionPicker
-        options={Object.values(TruthQuestionType)}
+        options={Object.values(TruthQuestionTypes)}
         selectedOption={truthQuestionType}
         onSelect={setTruthQuestionType}
+        title={t(TRUTH_QUESTION_LEVEL)}
       />
-
-      <Text className="text-lg font-medium mt-3 mb-2 text-settings-label">Dare Hardness</Text>
       <OptionPicker
-        options={Object.values(DareHardness)}
+        options={Object.values(DareHardnesses)}
         selectedOption={dareHardness}
         onSelect={setDareHardness}
+        title={t(DARE_QUESTION_LEVEL)}
+      />
+      <OptionPicker
+        options={[1, 2, 3, 4]}
+        selectedOption={numOfTruth}
+        onSelect={setNumOfTruth}
+        title={t(NUM_OF_TRUTH)}
       />
 
-      <Text className="text-lg font-medium mt-3 mb-2 text-settings-label">Theme</Text>
       <OptionPicker
-        options={Object.values(Theme)}
+        options={[1, 2, 3]}
+        selectedOption={numOfDare}
+        onSelect={setNumOfDare}
+        title={t(NUM_OF_DARE)}
+      />
+
+      <OptionPicker
+        options={Object.values(Themes)}
         selectedOption={theme}
         onSelect={setTheme}
+        title={t(THEME)}
+      />
+
+      <OptionPicker
+        options={['English', '简体中文']}
+        selectedOption={language}
+        onSelect={setLanguage}
+        title={t(LANGUAGE)}
       />
 
       <View className="mt-6 self-center w-1/2">
-        <Button title="Reset Players" onPress={resetPlayers} color={SettingsColors.RESET_PLAYERS_COLOR}/>
+        <Button title={t(RESET_PLAYERS)} onPress={resetPlayers} color={SettingsColors.RESET_PLAYERS_COLOR}/>
       </View>
 
-      <View className="mt-6 self-center w-1/2 bg-reset-players">
-        <Button title="Reset Settings" onPress={resetSettings} color={SettingsColors.RESET_SETTINGS_COLOR}/>
+      <View className="mt-6 self-center w-1/2">
+        <Button title={t(RESET_SETTINGS)} onPress={resetSettings} color={SettingsColors.RESET_SETTINGS_COLOR}/>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

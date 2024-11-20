@@ -2,8 +2,14 @@ import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SettingsProvider } from "@/hooks/SettingsContext";
 import { TabsLayoutColors } from "@/constants/Colors";
+import { useTranslation } from 'react-i18next';
+import { TRUTH_OR_DARE, GAME, LIBRARY, SETTINGS, QUESTION_LIBRARY } from "@/constants/TranslationKeys";
+
 
 export default function TabsLayout() {
+
+  const { t } = useTranslation();
+
   return (
     <SettingsProvider>
       <Tabs
@@ -22,8 +28,8 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "game",
-            headerTitle: "Truth or Dare",
+            title: t(GAME),
+            headerTitle: t(TRUTH_OR_DARE),
             tabBarIcon: ({ focused, color }) => (
               <Ionicons
                 name={focused ? "game-controller" : "game-controller-outline"}
@@ -35,8 +41,8 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="library"
           options={{
-            title: "library",
-            headerTitle: "Truth or Dare Question Library",
+            title: t(LIBRARY),
+            headerTitle: t(QUESTION_LIBRARY),
             tabBarIcon: ({ focused, color }) => (
               <Ionicons
                 name={focused ? "chatbubble-ellipses" : "chatbubble-ellipses-outline"}
@@ -48,7 +54,7 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="settings"
           options={{
-            headerTitle: "Settings",
+            headerTitle: t(SETTINGS),
             tabBarIcon: ({ focused, color }) => (
               <Ionicons
                 name={focused ? "settings" : "settings-outline"}

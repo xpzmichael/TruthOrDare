@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { View } from "react-native";
 import ChatBubble from "@/components/question-library/ChatBubble";
 import QuestionManager from "./QuestionManager";
+import { useTranslation } from "react-i18next";
+import { QUESTION_PLACEHOLDER } from "@/constants/TranslationKeys";
 
 const QuestionDisplayer: React.FC = () => {
-  const questionManager = QuestionManager.getInstance();
+  const questionManagerRef = useRef(QuestionManager.getInstance());
   const [questions, setQuestions] = useState<string[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
-    questionManager.subscribe(setQuestions);
+    questionManagerRef.current.subscribe(setQuestions);
   }, []);
 
-  if (questions.length === 0) {
-    const placeholder = 'Press "Truth" or "Dare" to get a question!';
-    setQuestions([placeholder]);
-  }
+  useEffect(() => {
+    console.log("Language changed, resetting questions");
+    setQuestions([t(QUESTION_PLACEHOLDER)]);
+  }, [t]);
+
 
   return (
     <View className="w-full h-2/3 pt-8 flex-col justify-between items-center">

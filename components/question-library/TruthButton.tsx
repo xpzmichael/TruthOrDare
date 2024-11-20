@@ -1,20 +1,24 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import QuestionButton from "./QuestionButton";
 import { QuestionLibraryColors } from "@/constants/Colors";
 import QuestionManager from "./QuestionManager";
 import { useSettings } from "@/hooks/SettingsContext";
+import { useTranslation } from "react-i18next";
+import { TRUTH } from "@/constants/TranslationKeys";
+import { TruthQuestionType } from "@/constants/SettingsEnums";
 
 
 const TruthButton = () => {
-  const { truthQuestionType } = useSettings();
-  const questionManager = QuestionManager.getInstance();
+  const { truthQuestionType, numOfTruth } = useSettings();
+  const { t } = useTranslation();
+  const questionManagerRef = useRef(QuestionManager.getInstance());
   
   const handlePress = useCallback(() => {
-    questionManager.popTruthQuestions(truthQuestionType);
-  }, [truthQuestionType]);
+    questionManagerRef.current.popTruthQuestions(truthQuestionType, numOfTruth);
+  }, [truthQuestionType, numOfTruth]);
 
   return (
-    <QuestionButton color={QuestionLibraryColors.TRUTH_BUTTON} label='Truth' onPress={handlePress}/>
+    <QuestionButton color={QuestionLibraryColors.TRUTH_BUTTON} label={t(TRUTH)} onPress={handlePress}/>
   )
 }
 
