@@ -1,6 +1,6 @@
 import { TruthQuestionType, TruthQuestionTypes } from '@/constants/SettingsEnums';
 import { DareHardness, DareHardnesses } from '@/constants/SettingsEnums';
-import { getRandomQuestions } from './QuestionUtils';
+import { getRandomQuestions, loadTextFile } from '../../utils/QuestionUtils';
 
 const DEVIDER_LINE_MAX_LENGTH = 5;
 
@@ -29,46 +29,49 @@ class QuestionDatabase {
   }
 
   public async initializeQuestions(filePath: string): Promise<void> {
-    const response = await fetch(filePath);
-    console.log("initializeQuestions");
-    const fileContent = await response.text();
-    const lines = fileContent.split('\n');
-    let i = 1;
+    try {
+      const fileContent = await loadTextFile(filePath);
+      const lines = fileContent.split('\n');
+      let i = 1;
 
-    // Clear the questions for each category for Truth and Dare
-    this.truthQuestionsMap.forEach((_, key) => {
-      this.truthQuestionsMap.set(key, []);
-    });
+      // Clear the questions for each category for Truth and Dare
+      this.truthQuestionsMap.forEach((_, key) => {
+        this.truthQuestionsMap.set(key, []);
+      });
 
-    this.dareQuestionsMap.forEach((_, key) => {
-      this.dareQuestionsMap.set(key, []);
-    });
+      this.dareQuestionsMap.forEach((_, key) => {
+        this.dareQuestionsMap.set(key, []);
+      });
+
+      for (let category of Object.values(TruthQuestionTypes)) {
+        while (i < lines.length && lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
+          const questions = this.truthQuestionsMap.get(category);
+          if (questions) {
+            questions.push(lines[i]);
+          }
+          i++;
+        }
+        while (i < lines.length && lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
+          i++;
+        }
+      }
+
+      for (let category of Object.values(DareHardnesses)) {
+        while (i < lines.length && lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
+          const questions = this.dareQuestionsMap.get(category);
+          if (questions) {
+            questions.push(lines[i]);
+          }
+          i++;
+        }
+        while (i < lines.length && lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
+          i++;
+        }
+      }
+    } catch (error) {
+      console.error('Error reading questions file:', error);
+    }
     
-    for (let category of Object.values(TruthQuestionTypes)) {
-      while (i < lines.length && lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
-        const questions = this.truthQuestionsMap.get(category);
-        if (questions) {
-          questions.push(lines[i]);
-        }
-        i++;
-      }
-      while (i < lines.length && lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
-        i++;
-      }
-    }
-
-    for (let category of Object.values(DareHardnesses)) {
-      while (i < lines.length && lines[i].length > DEVIDER_LINE_MAX_LENGTH) {
-        const questions = this.dareQuestionsMap.get(category);
-        if (questions) {
-          questions.push(lines[i]);
-        }
-        i++;
-      }
-      while (i < lines.length && lines[i].length < DEVIDER_LINE_MAX_LENGTH) {
-        i++;
-      }
-    }
   }
 
   public getTruthQuestions(questionType: TruthQuestionType, questionsNeeded: number): string[] {

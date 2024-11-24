@@ -1,50 +1,71 @@
-# Welcome to your Expo app 👋
+# Truth or Dare
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome to the Truth or Dare app! This app is designed to provide a fun and interactive experience for users to play the classic game of Truth or Dare. The app supports multiple languages and offers various customization options to enhance your gameplay.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **Language Selection**: Choose between English and Simplified Chinese.
+- **Customizable Settings**: Adjust spin speed, question levels, light and dark themes, and other settings.
+- **Question Library**: Access a wide range of truth and dare questions.
+- **Interactive Gameplay**: Spin the wheel to choose players dynamically.
 
-   ```bash
-   npm install
-   ```
+## Usage
+### Main Screens
+- **Index Screen**: The main screen where you can select the language and start the game.
+- **Settings Screen**: Customize your game settings, including spin speed, question levels, and themes.
+- **Library Screen**: View and interact with the question library, and choose between truth and dare questions.
 
-2. Start the app
 
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+## File Structure
+```
+.
+├── app/
+│   ├── _layout.tsx
+│   ├── (tabs)/
+│   │   ├── index.tsx
+│   │   ├── _layout.tsx
+│   │   ├── library.tsx
+│   │   └── settings.tsx
+├── assets/
+│   ├── images/
+│   ├── questions/
+│   │   ├── Questions-en.txt
+│   │   └── Questions-zh.txt
+├── components/
+│   ├── game/
+│   │   ├── SpinnerGame.tsx
+│   │   ├── Spinner.tsx
+│   │   ├── StartButton.tsx
+│   │   └── ResultDisplayer.tsx
+│   ├── modal/
+│   │   ├── LanguageSelector.tsx
+│   │   └── GameInitializer.tsx
+│   ├── question-library/
+│   │   ├── QuestionDisplayer.tsx
+│   │   ├── ChatBubble.tsx
+│   │   ├── TruthButton.tsx
+│   │   ├── DareButton.tsx
+│   │   ├── QuestionButton.tsx
+│   │   ├── QuestionManager.tsx
+│   │   ├── QuestionDatabase.tsx
+│   │   └── OptionPicker.tsx
+├── constants/
+│   ├── Colors.ts
+│   ├── SettingsEnums.ts
+│   └── TranslationKeys.ts
+├── hooks/
+│   ├── SettingsContext.tsx
+│   └── UseSizeRatio.tsx
+├── locales/
+│   ├── en.json
+│   ├── zh.json
+│   └── i18n.ts
+├── utils/
+│   ├── QuestionUtils.ts
+│   ├── LanguageUtils.ts
+│   ├── GetSpinnerSpeed.ts
+│   └── TextUtils.ts
+└── [config files & README]
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Enjoy playing! 

@@ -5,7 +5,8 @@ import { useSettings } from '@/hooks/SettingsContext';
 import { useTranslation } from 'react-i18next';
 import { SettingsColors } from '@/constants/Colors';
 import { Themes, SpinSpeeds, TruthQuestionTypes, DareHardnesses } from '@/constants/SettingsEnums';
-import { SETTINGS, ROULETTE_SPIN_SPEED, TRUTH_QUESTION_LEVEL, DARE_QUESTION_LEVEL, NUM_OF_TRUTH, NUM_OF_DARE, THEME, LANGUAGE, RESET_PLAYERS, RESET_SETTINGS } from '@/constants/TranslationKeys';
+import { ROULETTE_SPIN_SPEED, TRUTH_QUESTION_LEVEL, DARE_QUESTION_LEVEL, NUM_OF_TRUTH, NUM_OF_DARE, THEME, LANGUAGE, RESET_PLAYERS, RESET_SETTINGS } from '@/constants/TranslationKeys';
+import GameInitializer from '@/components/modal/GameInitializer';
 
 const SettingsScreen: React.FC = () => {
   const {
@@ -19,6 +20,7 @@ const SettingsScreen: React.FC = () => {
     setDareHardness,
     theme,
     setTheme,
+    players,
     resetSettings,
     resetPlayers,
     numOfTruth,
@@ -30,9 +32,7 @@ const SettingsScreen: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <ScrollView className={`flex-1 p-5 ${theme === Themes.Dark ? 'bg-settings-container-bg-dark' : 'bg-settings-container-bg'}`}>
-      <Text className="text-2xl font-bold mb-5 text-center text-settings-title">{t(SETTINGS)}</Text>
-
+    <ScrollView className={`flex-1 p-5 py-7 ${theme === Themes.Dark ? 'bg-settings-container-bg-dark' : 'bg-settings-container-bg'}`}>
       <OptionPicker
         options={Object.values(SpinSpeeds)}
         selectedOption={spinSpeed}
@@ -52,7 +52,7 @@ const SettingsScreen: React.FC = () => {
         title={t(DARE_QUESTION_LEVEL)}
       />
       <OptionPicker
-        options={[1, 2, 3, 4]}
+        options={[1, 2, 3]}
         selectedOption={numOfTruth}
         onSelect={setNumOfTruth}
         title={t(NUM_OF_TRUTH)}
@@ -86,6 +86,8 @@ const SettingsScreen: React.FC = () => {
       <View className="mt-6 self-center w-1/2">
         <Button title={t(RESET_SETTINGS)} onPress={resetSettings} color={SettingsColors.RESET_SETTINGS_COLOR}/>
       </View>
+      {players === 0 && <GameInitializer/>}
+      <View className="h-20"/>
     </ScrollView>
   );
 };

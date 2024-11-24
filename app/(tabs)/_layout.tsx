@@ -4,6 +4,7 @@ import { SettingsProvider } from "@/hooks/SettingsContext";
 import { TabsLayoutColors } from "@/constants/Colors";
 import { useTranslation } from 'react-i18next';
 import { TRUTH_OR_DARE, GAME, LIBRARY, SETTINGS, QUESTION_LIBRARY } from "@/constants/TranslationKeys";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 
 export default function TabsLayout() {
@@ -11,6 +12,7 @@ export default function TabsLayout() {
   const { t } = useTranslation();
 
   return (
+    <GestureHandlerRootView>
     <SettingsProvider>
       <Tabs
         screenOptions={{
@@ -66,5 +68,7 @@ export default function TabsLayout() {
       </Tabs>
 
     </SettingsProvider>
+
+    </GestureHandlerRootView>
   );
 }

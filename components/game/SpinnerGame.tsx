@@ -5,59 +5,69 @@ import Spinner from './Spinner';
 import StartButton from './StartButton';
 import { useSettings } from '@/hooks/SettingsContext';
 import useSizeRatio from '@/hooks/UseSizeRatio';
-import { getSpinnerDelay } from './GetSpinnerSpeed';
+import { getSpinnerDelay } from '../../utils/GetSpinnerSpeed';
+import { useSpinnerContext } from '@/hooks/SpinnerContext';
+import TopButtons from './TopButtons';
 
 interface SpinnerGameProps {
   numElements: number;
 }
 
 const SpinnerGame: React.FC<SpinnerGameProps> = ({ numElements }) => {
-  const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
+
+  const { highlightedIndex, circleContainerWidth, setHighlightedIndex, setBallWidth, setCircleContainerWidth,
+    setCircleContainerBorderWidth, setRadius, setNumElements } = useSpinnerContext();
 
   const lastRoundIndexRef = useRef<number>(highlightedIndex);
   const { spinSpeed } = useSettings();
-
-  let initialDelay: number;
-
-  initialDelay = getSpinnerDelay(spinSpeed);
-
   const sizeRatio = useSizeRatio();
 
-  const ballRadius: number = (15 + 75 / numElements) * sizeRatio;
-  const spinnerCircleRadius: number = (160 - ballRadius) * sizeRatio;
-  const circleContainerBorderWidth: number = 1;
-  const circleContainerWidth: number =
-    spinnerCircleRadius * 2 + ballRadius * 2 + circleContainerBorderWidth * 2;
+  const initialDelay = getSpinnerDelay(spinSpeed);
 
   useEffect(() => {
+    const ballRadius: number = (15 + 75 / numElements) * sizeRatio;
+    const spinnerCircleRadius: number = (160 - ballRadius) * sizeRatio;
+    const circleContainerBorderWidth: number = 1;
+    const circleContainerWidth: number =
+      spinnerCircleRadius * 2 + ballRadius * 2 + circleContainerBorderWidth * 2;
+
+    setNumElements(numElements);
+    setBallWidth(ballRadius * 2);
+    setRadius(spinnerCircleRadius);
+    setCircleContainerWidth(circleContainerWidth);
+    setCircleContainerBorderWidth(circleContainerBorderWidth);
+  }, [numElements]);
+
+
+  useEffect(() => {
+    if (!isSpinning) return;
+
     let timeout: NodeJS.Timeout;
     let delay = initialDelay;
     const delayIncrement = 1 + 0.8 / numElements;
     let numIterations = Math.random() * (numElements - 1) + (numElements - 1) * 2;
 
-    if (isSpinning) {
-      const spin = () => {
-        setHighlightedIndex((prevIndex) => {
-          const newIndex = (prevIndex + 1) % numElements;
+    const spin = () => {
+      setHighlightedIndex((prevIndex: number) => {
+        const newIndex = (prevIndex + 1) % numElements;
 
-          if (newIndex !== lastRoundIndexRef.current) {
-            numIterations -= 1;
-          }
+        if (newIndex !== lastRoundIndexRef.current) {
+          numIterations -= 1;
+        }
 
-          if (numIterations <= 0) {
-            setIsSpinning(false);
-            return newIndex;
-          }
-
-          delay *= delayIncrement;
-          timeout = setTimeout(spin, delay);
+        if (numIterations <= 0) {
+          setIsSpinning(false);
           return newIndex;
-        });
-      };
+        }
 
-      timeout = setTimeout(spin, delay);
-    }
+        delay *= delayIncrement;
+        timeout = setTimeout(spin, delay);
+        return newIndex;
+      });
+    };
+
+    timeout = setTimeout(spin, delay);
 
     lastRoundIndexRef.current = highlightedIndex;
 
@@ -72,18 +82,15 @@ const SpinnerGame: React.FC<SpinnerGameProps> = ({ numElements }) => {
     }
   };
 
+
   return (
-    <View className="border border-black flex justify-center items-center mt-1" style={{ width: circleContainerWidth }}>
-      <Spinner
-        numElements={numElements}
-        highlightedIndex={highlightedIndex}
-        ballWidth={ballRadius * 2}
-        spinnerCircleRadius={spinnerCircleRadius}
-        circleContainerBorderWidth={circleContainerBorderWidth}
-        circleContainerWidth={circleContainerWidth}
-      />
-      <ResultDisplayer interviewerIndex={lastRoundIndexRef.current + 1} intervieweeIndex={highlightedIndex + 1} />
-      <StartButton isSpinning={isSpinning} onPress={startSpinning} />
+    <View className="flex justify-center items-center pb-12" style={{ width: circleContainerWidth }}>
+      <TopButtons />
+      <Spinner />
+      <View className='flex justify-center -z-10 items-center border border-black' style={{ width: circleContainerWidth }}>
+        <ResultDisplayer interviewerIndex={lastRoundIndexRef.current + 1} intervieweeIndex={highlightedIndex + 1} />
+        <StartButton isSpinning={isSpinning} onPress={startSpinning} />
+      </View>
     </View>
   );
 };

@@ -1,5 +1,6 @@
 import QuestionDatabase from "@/components/question-library/QuestionDatabase";
 import { DareHardness, TruthQuestionType } from "@/constants/SettingsEnums";
+import { fileMap, getLanguageSetting } from "@/utils/LanguageUtils";
 
 type QuestionConsumer = (questions: string[]) => void;
 
@@ -20,8 +21,12 @@ class QuestionManager {
     return QuestionManager.instance;
   }
 
-  public async initializeQuestions(filePath: string): Promise<void> {
+  public async initializeQuestions(varLanguage: string): Promise<void> {
+    if (!fileMap[varLanguage]) {
+      throw new Error(`Unsupported language: ${varLanguage}`);
+    }
     const questionDatabase = QuestionDatabase.getInstance();
+    const filePath = fileMap[varLanguage];
     await questionDatabase.initializeQuestions(filePath);
   }
 

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { SpinSpeed, TruthQuestionType, DareHardness, Theme, SpinSpeeds, TruthQuestionTypes, DareHardnesses, Themes } from '@/constants/SettingsEnums';
-import i18n, { getLanguageSetting } from '@/locales/i18n';
+import i18n from '@/locales/i18n';
+import { getLanguageSetting } from '@/utils/LanguageUtils';
 import QuestionManager from '@/components/question-library/QuestionManager';
 
 type Settings = {
@@ -34,13 +35,12 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [dareHardness, setDareHardness] = useState<DareHardness>(DareHardnesses.Medium);
   const [theme, setTheme] = useState<Theme>(Themes.Light);
   const [numOfTruth, setNumOfTruth] = useState<number>(3);
-  const [numOfDare, setNumOfDare] = useState<number>(3);
+  const [numOfDare, setNumOfDare] = useState<number>(2);
 
   useEffect(() => {
-    console.log('Language switched:', language);
     const varLan = getLanguageSetting(language);
     i18n.changeLanguage(varLan);
-    QuestionManager.getInstance().initializeQuestions(`./assets/questions/Questions-${varLan}.txt`);
+    QuestionManager.getInstance().initializeQuestions(varLan);
   }, [language]);
 
   const resetSettings = () => {

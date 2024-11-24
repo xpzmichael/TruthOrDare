@@ -1,4 +1,3 @@
-import { StartButtonColors } from '@/constants/Colors';
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -36,4 +35,4 @@ const StartButton: React.FC<StartButtonProps> = ({ isSpinning, onPress }) => {
   );
 };
 
-export default StartButton;
+export default React.memo(StartButton);

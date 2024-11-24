@@ -30,7 +30,7 @@ const QuestionButton = ({color, label, onPress = () => {}} : Props) => {
           borderWidth: 1,
           borderColor: '#333', // Darker border to give a sense of depth}}>
         }}>
-      <Text className={`text-xl font-bold text-white text-center`}
+      <Text className={`font-bold text-white text-center`}
             style={{fontSize: 24 * sizeRatio}}>
         {label}
       </Text>

@@ -5,7 +5,7 @@
     "settings": "设置",
 
     "pleaseSelectLanguage": "请选择您的语言",
-    "alertPlayerCount": "至少需要3名玩家才能开始游戏",
+    "alertPlayerCount": "请输入3到20之间的整数以开始游戏",
 
     "language": "语言",
     "rouletteSpinSpeed": "转盘旋转速度",
@@ -16,6 +16,8 @@
     "theme": "主题",
 
     "enterNumPlayers": "请输入玩家数量",
+    "enterNumPlaceholder": "3 ~ 20",
+    "startGame": "开始游戏",
 
     "start": "开始",
     "spinning...": "旋转中...",

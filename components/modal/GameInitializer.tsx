@@ -1,30 +1,40 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
   TextInput,
   Button,
   Modal,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { ENTER_NUM_PLAYERS } from '@/constants/TranslationKeys';
+import { ALERT_PLAYER_COUNT, ENTER_NUM_PLACEHOLDER, ENTER_NUM_PLAYERS, START_GAME } from '@/constants/TranslationKeys';
+import { useSettings } from '@/hooks/SettingsContext';
+import { ModalColors } from '@/constants/Colors';
 
-type Props = {
-  visible: boolean;
-  onInitialize: (numPlayers: string) => void;
-}
 
-const GameInitializer = ({ visible, onInitialize} : Props) => {
+const GameInitializer = () => {
+  const { setPlayers } = useSettings();
   const [numPlayers, setNumPlayers] = useState<string>('');
   const { t } = useTranslation();
 
+
+  const initializeGame = useCallback((numPlayers: string) => {
+    const count = parseInt(numPlayers);
+    if (isNaN(count) || count < 3 || count > 20) {
+      Alert.alert(t(ALERT_PLAYER_COUNT));
+    } else {
+      setPlayers(count);
+    }
+  }, [t]);
+
   const handleStartGame = () => {
-    onInitialize(numPlayers);
+    initializeGame(numPlayers);
   };
 
   return (
     <Modal
-      visible={visible}
       transparent={true}
       animationType="none"
       onRequestClose={() => {}}
@@ -37,9 +47,20 @@ const GameInitializer = ({ visible, onInitialize} : Props) => {
             keyboardType="number-pad"
             value={numPlayers}
             onChangeText={setNumPlayers}
-            placeholder="Enter number"
+            placeholder={t(ENTER_NUM_PLACEHOLDER)}
           />
-          <Button title="Start Game" onPress={handleStartGame} />
+          <TouchableOpacity
+            className="mt-5 py-1 px-5 rounded"
+            style={{ backgroundColor: ModalColors.BUTTON_BACKGROUND }}
+            onPress={handleStartGame}
+          >
+            <Text
+              className="text-white text-lg"
+              style={{ color: ModalColors.BUTTON_TEXT }}
+            >
+              {t(START_GAME)}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>

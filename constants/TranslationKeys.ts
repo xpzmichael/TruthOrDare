@@ -15,6 +15,8 @@ export const NUM_OF_DARE = "numOfDareOptions";
 export const THEME = "theme";
 
 export const ENTER_NUM_PLAYERS = "enterNumPlayers";
+export const ENTER_NUM_PLACEHOLDER = "enterNumPlaceholder";
+export const START_GAME = "startGame";
 
 export const START = "start";
 export const SPINNING = "spinning...";

@@ -5,7 +5,7 @@
     "settings": "Settings",
 
     "pleaseSelectLanguage": "Please Select a Language",
-    "alertPlayerCount": "at Least 3 Players are needed to start the game",
+    "alertPlayerCount": "Please enter a number from 3 to 20 to start the game",
 
     "language": "Language",
     "rouletteSpinSpeed": "Roulette Spin Speed",
@@ -16,6 +16,8 @@
     "theme": "Theme",
 
     "enterNumPlayers": "Please enter the number of Players",
+    "enterNumPlaceholder": "3 ~ 20",
+    "startGame": "Start Game",
 
     "start": "Start",
     "spinning...": "Spinning...",

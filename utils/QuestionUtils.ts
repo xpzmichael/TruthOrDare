@@ -1,4 +1,8 @@
 import { DareHardness, DareHardnesses, TruthQuestionType, TruthQuestionTypes } from '@/constants/SettingsEnums';
+import * as FileSystem from 'expo-file-system'; 
+import { Asset } from 'expo-asset';
+import { Platform } from 'react-native';
+
 
 const DEVIDER_LINE_MAX_LENGTH = 5;
 
@@ -63,4 +67,32 @@ export function getRandomQuestions(questionType: TruthQuestionType | DareHardnes
     result.add(question);
   }
   return Array.from(result);
+}
+
+// A function to load the text file, handling both web and native
+export async function loadTextFile(filePath: string): Promise<string> {
+  if (!filePath) {
+    console.log('Loading Questions file failed');
+    return '';
+  }
+
+  const asset = Asset.fromModule(filePath);
+  await asset.downloadAsync();
+  try {
+    if (Platform.OS === 'web') {
+      const response = await fetch(asset.uri);
+      const content = await response.text();
+      return content;
+    } else {
+      const localUri = asset.localUri;
+      if (!localUri) {
+        throw new Error('Local URI is not available');
+      }
+      const content = await FileSystem.readAsStringAsync(localUri);
+      return content;
+    }
+  } catch (error) {
+    console.error('Error loading file:', error);
+    throw error;
+  }
 }
