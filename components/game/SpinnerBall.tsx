@@ -16,13 +16,13 @@ const SpinnerBall: React.FC<SpinnerBallProps> = ({
   angle,
 }) => {
 
-  const { radius, ballWidth, locked, highlightedIndex, reset } = useSpinnerContext();
+  const { numElements, radius, ballWidth, locked, highlightedIndex, reset } = useSpinnerContext();
 
   const [ballColor, setBallColor] = useState(SpinnerColors.BALL_BACKGROUND);
 
   useEffect(() => {
     resetPosition();
-  }, [reset]);
+  }, [reset, numElements]);
 
   useEffect(() => {
     setBallColor(
@@ -42,9 +42,9 @@ const SpinnerBall: React.FC<SpinnerBallProps> = ({
   const scale = useSharedValue(1); 
 
   const resetPosition = useCallback(() => {
-    translateX.value = initialX;
-    translateY.value = initialY;
-  }, []);
+    translateX.value = withSpring(initialX);
+    translateY.value = withSpring(initialY);
+  }, [numElements]);
 
   // Animated styles
   const animatedStyle = useAnimatedStyle(() => ({

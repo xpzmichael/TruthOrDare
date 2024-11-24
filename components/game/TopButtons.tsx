@@ -9,7 +9,9 @@ const TopButtons = () => {
   const { setReset, locked, setLocked } = useSpinnerContext();
   return (
     <View className="flex-row justify-end items-center w-full h-12">
-      <IconButton iconName="reload" onPress={() => setReset(toggleBoolean)} />
+      <IconButton iconName="reload" onPress={() => {
+          setReset(toggleBoolean)
+        }} />
       {locked ? 
         <IconButton iconName="lock-closed" onPress={() => setLocked(false)} />
         :
