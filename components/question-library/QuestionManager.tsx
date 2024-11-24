@@ -6,12 +6,10 @@ type QuestionConsumer = (questions: string[]) => void;
 
 class QuestionManager {
   private static instance: QuestionManager;
-  private numOfQuestions: number;
   private questionConsumer?: QuestionConsumer;
   private questionDatabase: QuestionDatabase = QuestionDatabase.getInstance();
 
-  private constructor(numOfQuestions: number = 3) {
-    this.numOfQuestions = numOfQuestions;
+  private constructor() {
   }
 
   public static getInstance(): QuestionManager {

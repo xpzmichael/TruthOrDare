@@ -1,11 +1,10 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, LayoutChangeEvent, StyleSheet } from 'react-native';
 import Svg, { Path, Text, TSpan } from 'react-native-svg';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 import { ChatBubbleColors } from '@/constants/Colors';
 import { useSettings } from '@/hooks/SettingsContext';
@@ -14,14 +13,19 @@ import useSizeRatio from '@/hooks/UseSizeRatio';
 
 interface ChatBubbleProps {
   content: string;
-  blurred?: boolean;
-  selected?: boolean;
+  blurred: boolean;
+  selected: boolean;
 }
 
 const ChatBubble: React.FC<ChatBubbleProps> = ({ content, blurred, selected }) => {
   const [aspectRatio, setAspectRatio] = useState(1);
   const sizeRatio = useSizeRatio();
   const { language } = useSettings();
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = getScale();
+  }, [blurred, selected]);
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -40,7 +44,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ content, blurred, selected }) =
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
-      { scale: withSpring(getScale(), { damping: 12, stiffness: 150 }) }
+      { scale: withSpring(scale.value, { damping: 12, stiffness: 150 }) }
     ],
   }));
 
