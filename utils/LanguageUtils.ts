@@ -11,6 +11,6 @@ export const getLanguageSetting = (language: string) => {
 };
 
 export const fileMap: Record<string, any> = {
-  en: require('../assets/questions/Questions-en.txt'),
-  zh: require('../assets/questions/Questions-zh.txt'),
+  en: require('@/assets/questions/Questions-en.txt'),
+  zh: require('@/assets/questions/Questions-zh.txt'),
 };

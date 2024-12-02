@@ -14,7 +14,7 @@
     "rouletteSpinSpeed": "Roulette Spin Speed",
     "truthQuestionLevel": "Truth Question Level",
     "dareQuestionLevel": "Dare Question Level",
-    "includeEasierQuestions": "Include Easier Questions When Hard Selected",
+    "includeEasierQuestions": "Allow Easier Questions When Hard is Set",
     "numOfTruthOptions": "Number of Truth Options",
     "numOfDareOptions": "Number of Dare Options",
     "theme": "Theme",

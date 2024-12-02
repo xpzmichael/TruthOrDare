@@ -16,7 +16,6 @@ const GameInitializer = ({languageSelection} : Props) => {
   const [numPlayers, setNumPlayers] = useState<string>('');
   const { t } = useTranslation();
 
-  // Handle the initialization of the game with number of players
   const initializeGame = useCallback((numPlayers: string) => {
     const count = parseInt(numPlayers);
     if (isNaN(count) || count < 3 || count > 20) {

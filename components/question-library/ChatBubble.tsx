@@ -33,12 +33,12 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ content, blurred, selected, cha
 
   const getWidth = useCallback(() => {
     if (selected) {
-      return 1 * chatWidth;  // Increase width when selected
+      return 1 * chatWidth; 
     }
     if (blurred) {
-      return 0.7 * chatWidth;   // Decrease width when blurred
+      return 0.7 * chatWidth; 
     }
-    return 0.9 * chatWidth;     // Default width
+    return 0.9 * chatWidth;  
   }, [selected, blurred, chatWidth]);
 
   const animatedStyle = useAnimatedStyle(() => ({

@@ -12,7 +12,6 @@ export const EnterPlayerNumber = () => {
   const [numPlayers, setNumPlayers] = useState<string>('');
   const { t } = useTranslation();
 
-  // Handle the initialization of the game with number of players
   const initializeGame = useCallback((numPlayers: string) => {
     const count = parseInt(numPlayers);
     if (isNaN(count) || count < 3 || count > 20) {
@@ -22,7 +21,6 @@ export const EnterPlayerNumber = () => {
     }
   }, [t]);
 
-  // Handle game start after both steps are completed
   const handleStartGame = () => {
     initializeGame(numPlayers);
   };

@@ -82,7 +82,7 @@ export function getRandomQuestions(questionType: TruthQuestionType | DareHardnes
 // A function to load the text file, handling both web and native
 export async function loadTextFile(filePath: string): Promise<string> {
   if (!filePath) {
-    console.log('Loading Questions file failed');
+    // console.log('Loading Questions file failed');
     return '';
   }
 

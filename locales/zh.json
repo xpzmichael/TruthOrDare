@@ -13,7 +13,7 @@
     "language": "语言",
     "rouletteSpinSpeed": "转盘旋转速度",
     "truthQuestionLevel": "真心话问题难度",
-    "includeEasierQuestions": "选择高难度问题时，同时包含更低难度问题",
+    "includeEasierQuestions": "设置高难度时，允许出现更低难度问题",
     "dareQuestionLevel": "大冒险问题难度",
     "numOfTruthOptions": "真心话选项数量",
     "numOfDareOptions": "大冒险选项数量",

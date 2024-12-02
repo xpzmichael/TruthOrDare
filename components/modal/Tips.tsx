@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { View, ImageBackground, Modal, StyleSheet } from 'react-native';
 import useSizeRatio from '@/hooks/UseSizeRatio';
-import IconButton from '@/components/IconButton'; // Assuming the IconButton is in this path
+import IconButton from '@/components/IconButton';
 import { ModalColors } from '@/constants/Colors';
 import { useSettings } from '@/hooks/SettingsContext';
 
 
-// Define a type for image objects
 interface ImageItem {
-  uri: any; // Adjusted for dynamic image sources
+  uri: any; 
 }
 
 interface TipsProps {
@@ -40,7 +39,7 @@ export const Tips: React.FC<TipsProps> = ({ visible, onClose }) => {
 
   const handleNext = () => {
     if (currentIndex === images.length - 1) {
-      onClose(); // Close the modal if the current image is the last one
+      onClose(); 
     } else {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
@@ -59,7 +58,7 @@ export const Tips: React.FC<TipsProps> = ({ visible, onClose }) => {
               <IconButton
                 iconName={currentIndex === images.length - 1 ? 'close-circle' : 'arrow-forward-circle'}
                 onPress={handleNext}
-                size={50} // Adjust size if needed
+                size={50 * sizeRatio} 
                 color={ModalColors.TIPS_BUTTON_BACKGROUND}
               />
             </View>
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 12, // Adjust distance from the bottom
-    alignSelf: 'center', // Centers the button horizontally
+    bottom: 12, // Distance from the bottom
+    alignSelf: 'center', 
   },
 });

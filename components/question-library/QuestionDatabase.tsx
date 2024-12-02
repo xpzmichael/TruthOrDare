@@ -34,7 +34,6 @@ class QuestionDatabase {
       const lines = fileContent.split('\n');
       let i = 1;
 
-      // Clear the questions for each category for Truth and Dare
       this.truthQuestionsMap.forEach((_, key) => {
         this.truthQuestionsMap.set(key, []);
       });

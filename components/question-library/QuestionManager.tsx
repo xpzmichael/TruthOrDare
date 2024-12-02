@@ -31,7 +31,7 @@ class QuestionManager {
   
   public popTruthQuestions(truthQuestionType: TruthQuestionType, numOfTruth: number, includeEasierQuestions: boolean): void {
     if (!this.questionConsumer) {
-      console.log('QuestionDisplayer not subscribed to QuestionManager');
+      // not subscribed
       return;
     }
     if (includeEasierQuestions) {
@@ -43,7 +43,7 @@ class QuestionManager {
 
   public popDareQuestions(dareHardness: DareHardness, numOfDare: number, includeEasierQuestions: boolean): void {
     if (!this.questionConsumer) {
-      console.log('QuestionDisplayer not subscribed to QuestionManager');
+      // not subscribed
       return;
     }
     if (includeEasierQuestions) {

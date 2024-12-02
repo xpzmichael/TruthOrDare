@@ -28,7 +28,7 @@ const QuestionButton = ({color, label, onPress = () => {}} : Props) => {
 
           // Mimicking the inset shadow using a separate layer with a darker background
           borderWidth: 1,
-          borderColor: '#333', // Darker border to give a sense of depth}}>
+          borderColor: '#333', 
         }}>
       <Text className={`font-bold text-white text-center`}
             style={{fontSize: 24 * sizeRatio}}>

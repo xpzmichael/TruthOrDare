@@ -14,7 +14,7 @@ const TruthButton = () => {
   const questionManagerRef = useRef(QuestionManager.getInstance());
   
   const handlePress = useCallback(() => {
-    console.log(includeEasierQuestions);
+    // console.log(includeEasierQuestions);
     questionManagerRef.current.popTruthQuestions(truthQuestionType, numOfTruth, includeEasierQuestions === DoesIncludeEasierQuestions.Yes);
   }, [truthQuestionType, numOfTruth, includeEasierQuestions]);
 
