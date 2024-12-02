@@ -29,19 +29,27 @@ class QuestionManager {
   }
 
   
-  public popTruthQuestions(truthQuestionType: TruthQuestionType, numOfTruth: number): void {
-    if (this.questionConsumer) {
+  public popTruthQuestions(truthQuestionType: TruthQuestionType, numOfTruth: number, includeEasierQuestions: boolean): void {
+    if (!this.questionConsumer) {
+      console.log('QuestionDisplayer not subscribed to QuestionManager');
+      return;
+    }
+    if (includeEasierQuestions) {
       this.questionConsumer(this.questionDatabase.getTruthQuestions(truthQuestionType, numOfTruth));
     } else {
-      console.log('QuestionDisplayer not subscribed to QuestionManager');
+      this.questionConsumer(this.questionDatabase.getTruthQuestionsExactTier(truthQuestionType, numOfTruth));
     }
   }
 
-  public popDareQuestions(dareHardness: DareHardness, numOfDare: number): void {
-    if (this.questionConsumer) {
+  public popDareQuestions(dareHardness: DareHardness, numOfDare: number, includeEasierQuestions: boolean): void {
+    if (!this.questionConsumer) {
+      console.log('QuestionDisplayer not subscribed to QuestionManager');
+      return;
+    }
+    if (includeEasierQuestions) {
       this.questionConsumer(this.questionDatabase.getDareQuestions(dareHardness, numOfDare));
     } else {
-      console.log('QuestionDisplayer not subscribed to QuestionManager');
+      this.questionConsumer(this.questionDatabase.getDareQuestionsExactTier(dareHardness, numOfDare));
     }
   }
 

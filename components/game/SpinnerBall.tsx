@@ -15,7 +15,6 @@ const SpinnerBall: React.FC<SpinnerBallProps> = ({
   index,
   angle,
 }) => {
-
   const { numElements, radius, ballWidth, locked, highlightedIndex, reset } = useSpinnerContext();
 
   const [ballColor, setBallColor] = useState(SpinnerColors.BALL_BACKGROUND);
@@ -36,14 +35,15 @@ const SpinnerBall: React.FC<SpinnerBallProps> = ({
   const initialX = radius * Math.cos(angle);
   const initialY = radius * Math.sin(angle);
 
-  // Shared values for position
+  // Shared values for position and width
   const translateX = useSharedValue(initialX);
   const translateY = useSharedValue(initialY);
-  const scale = useSharedValue(1); 
+  const width = useSharedValue(ballWidth);
 
   const resetPosition = useCallback(() => {
     translateX.value = withSpring(initialX);
     translateY.value = withSpring(initialY);
+    width.value = withSpring(ballWidth);  // Reset width to original size
   }, [numElements]);
 
   // Animated styles
@@ -51,23 +51,24 @@ const SpinnerBall: React.FC<SpinnerBallProps> = ({
     transform: [
       { translateX: translateX.value },
       { translateY: translateY.value },
-      { scale: withSpring(scale.value, {damping: 1, stiffness: 100}) },
     ],
+    width: withSpring(width.value, { damping: 10, stiffness: 150 }),
+    height: withSpring(width.value, { damping: 10, stiffness: 150 }), // Maintain aspect ratio
   }));
 
   // Gesture definition
   const drag = useMemo(() => Gesture.Pan()
     .onBegin(() => {
-      scale.value = 0.9;
+      width.value = ballWidth * 0.9; // Reduce width during drag
     })
     .onChange((event) => {
-      if (locked) return; 
+      if (locked) return;
       translateX.value += event.changeX;
       translateY.value += event.changeY;
     })
     .onFinalize(() => {
-      scale.value = 1;
-    }), [locked]);
+      width.value = ballWidth; // Restore width after drag
+    }), [locked, ballWidth]);
 
   return (
     <GestureDetector gesture={drag}>
@@ -76,8 +77,6 @@ const SpinnerBall: React.FC<SpinnerBallProps> = ({
         style={[
           animatedStyle,
           {
-            width: ballWidth,
-            height: ballWidth,
             borderRadius: ballWidth / 2,
             backgroundColor: ballColor,
           },

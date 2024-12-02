@@ -4,8 +4,8 @@ import OptionPicker from '@/components/OptionPicker';
 import { useSettings } from '@/hooks/SettingsContext';
 import { useTranslation } from 'react-i18next';
 import { SettingsColors } from '@/constants/Colors';
-import { Themes, SpinSpeeds, TruthQuestionTypes, DareHardnesses } from '@/constants/SettingsEnums';
-import { ROULETTE_SPIN_SPEED, TRUTH_QUESTION_LEVEL, DARE_QUESTION_LEVEL, NUM_OF_TRUTH, NUM_OF_DARE, THEME, LANGUAGE, RESET_PLAYERS, RESET_SETTINGS } from '@/constants/TranslationKeys';
+import { Themes, SpinSpeeds, TruthQuestionTypes, DareHardnesses, DoesIncludeEasierQuestions } from '@/constants/SettingsEnums';
+import { ROULETTE_SPIN_SPEED, TRUTH_QUESTION_LEVEL, DARE_QUESTION_LEVEL, NUM_OF_TRUTH, NUM_OF_DARE, THEME, LANGUAGE, RESET_PLAYERS, RESET_SETTINGS, INCLUDE_EASIER_QUESTIONS } from '@/constants/TranslationKeys';
 import GameInitializer from '@/components/modal/GameInitializer';
 
 const SettingsScreen: React.FC = () => {
@@ -18,6 +18,8 @@ const SettingsScreen: React.FC = () => {
     setTruthQuestionType,
     dareHardness,
     setDareHardness,
+    includeEasierQuestions,
+    setIncludeEasierQuestions,
     theme,
     setTheme,
     players,
@@ -50,6 +52,12 @@ const SettingsScreen: React.FC = () => {
         selectedOption={dareHardness}
         onSelect={setDareHardness}
         title={t(DARE_QUESTION_LEVEL)}
+      />
+      <OptionPicker
+        options={Object.values(DoesIncludeEasierQuestions)}
+        selectedOption={includeEasierQuestions}
+        onSelect={setIncludeEasierQuestions}
+        title={t(INCLUDE_EASIER_QUESTIONS)}
       />
       <OptionPicker
         options={[1, 2, 3]}
@@ -86,7 +94,7 @@ const SettingsScreen: React.FC = () => {
       <View className="mt-6 self-center w-1/2">
         <Button title={t(RESET_SETTINGS)} onPress={resetSettings} color={SettingsColors.RESET_SETTINGS_COLOR}/>
       </View>
-      {players === 0 && <GameInitializer/>}
+      {players === 0 && <GameInitializer languageSelection={false}/>}
       <View className="h-20"/>
     </ScrollView>
   );

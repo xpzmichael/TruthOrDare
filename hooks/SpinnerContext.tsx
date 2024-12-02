@@ -10,6 +10,7 @@ interface SpinnerContextProps {
   reset: boolean;
   locked: boolean;
   radius: number;
+  showTips: boolean;
   setNumElements: React.Dispatch<React.SetStateAction<number>>;
   setHighlightedIndex: React.Dispatch<React.SetStateAction<number>>;
   setBallWidth: React.Dispatch<React.SetStateAction<number>>;
@@ -19,6 +20,7 @@ interface SpinnerContextProps {
   setReset: React.Dispatch<React.SetStateAction<boolean>>;
   setLocked: React.Dispatch<React.SetStateAction<boolean>>;
   setRadius: React.Dispatch<React.SetStateAction<number>>;
+  setShowTips: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SpinnerContext = createContext<SpinnerContextProps | undefined>(undefined);
@@ -33,6 +35,7 @@ export const SpinnerProvider: React.FC<{ children: ReactNode }> = ({ children })
   const [reset, setReset] = useState<boolean>(false);
   const [locked, setLocked] = useState<boolean>(false);
   const [radius, setRadius] = useState<number>(0);
+  const [showTips, setShowTips] = React.useState(false);
 
   return (
     <SpinnerContext.Provider
@@ -46,6 +49,7 @@ export const SpinnerProvider: React.FC<{ children: ReactNode }> = ({ children })
         reset,
         locked,
         radius,
+        showTips,
         setNumElements,
         setHighlightedIndex,
         setBallWidth,
@@ -55,6 +59,7 @@ export const SpinnerProvider: React.FC<{ children: ReactNode }> = ({ children })
         setReset,
         setLocked,
         setRadius,
+        setShowTips,
       }}
     >
       {children}

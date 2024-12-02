@@ -4,11 +4,11 @@
     "slug": "TruthOrDare",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/yamada_ryo.jpg",
+    "icon": "./assets/images/yamada_ryo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/yamada_ryo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,14 +17,15 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/yamada_ryo.jpg",
+        "foregroundImage": "./assets/images/yamada_ryo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.xpz.TruthOrDare"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/yamada_ryo.jpg"
+      "favicon": "./assets/images/yamada_ryo.png"
     },
     "plugins": [
       [
@@ -36,6 +37,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "10b36814-7881-4b91-9896-95a98da1f7fb"
+      }
+    },
+    "owner": "xpz"
   }
 }

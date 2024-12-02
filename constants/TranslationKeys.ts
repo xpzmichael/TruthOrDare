@@ -10,6 +10,7 @@ export const LANGUAGE = "language";
 export const ROULETTE_SPIN_SPEED = "rouletteSpinSpeed";
 export const TRUTH_QUESTION_LEVEL = "truthQuestionLevel";
 export const DARE_QUESTION_LEVEL = "dareQuestionLevel";
+export const INCLUDE_EASIER_QUESTIONS = "includeEasierQuestions";
 export const NUM_OF_TRUTH = "numOfTruthOptions";
 export const NUM_OF_DARE = "numOfDareOptions";
 export const THEME = "theme";

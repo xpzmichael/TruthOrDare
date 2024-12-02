@@ -31,3 +31,9 @@ export const Themes = {
   Dark: DARK,
 } as const;
 export type Theme = typeof Themes[keyof typeof Themes];
+
+export const DoesIncludeEasierQuestions = {
+  Yes: 'yes',
+  No: 'no',
+} as const;
+export type IncludeEasierQuestions = typeof DoesIncludeEasierQuestions[keyof typeof DoesIncludeEasierQuestions];

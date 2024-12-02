@@ -5,17 +5,18 @@ import QuestionManager from "./QuestionManager";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useTranslation } from "react-i18next";
 import { TRUTH } from "@/constants/TranslationKeys";
-import { TruthQuestionType } from "@/constants/SettingsEnums";
+import { DoesIncludeEasierQuestions } from "@/constants/SettingsEnums";
 
 
 const TruthButton = () => {
-  const { truthQuestionType, numOfTruth } = useSettings();
+  const { truthQuestionType, numOfTruth, includeEasierQuestions } = useSettings();
   const { t } = useTranslation();
   const questionManagerRef = useRef(QuestionManager.getInstance());
   
   const handlePress = useCallback(() => {
-    questionManagerRef.current.popTruthQuestions(truthQuestionType, numOfTruth);
-  }, [truthQuestionType, numOfTruth]);
+    console.log(includeEasierQuestions);
+    questionManagerRef.current.popTruthQuestions(truthQuestionType, numOfTruth, includeEasierQuestions === DoesIncludeEasierQuestions.Yes);
+  }, [truthQuestionType, numOfTruth, includeEasierQuestions]);
 
   return (
     <QuestionButton color={QuestionLibraryColors.TRUTH_BUTTON} label={t(TRUTH)} onPress={handlePress}/>

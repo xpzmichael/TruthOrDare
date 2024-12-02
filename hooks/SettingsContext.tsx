@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SpinSpeed, TruthQuestionType, DareHardness, Theme, SpinSpeeds, TruthQuestionTypes, DareHardnesses, Themes } from '@/constants/SettingsEnums';
+import { SpinSpeed, TruthQuestionType, DareHardness, Theme, SpinSpeeds, TruthQuestionTypes, DareHardnesses, Themes, IncludeEasierQuestions, DoesIncludeEasierQuestions } from '@/constants/SettingsEnums';
 import i18n from '@/locales/i18n';
 import { getLanguageSetting } from '@/utils/LanguageUtils';
 import QuestionManager from '@/components/question-library/QuestionManager';
@@ -10,6 +10,8 @@ type Settings = {
   truthQuestionType: TruthQuestionType;
   dareHardness: DareHardness;
   theme: Theme;
+  includeEasierQuestions: IncludeEasierQuestions;
+  setIncludeEasierQuestions: (includeEasierQuestions: IncludeEasierQuestions) => void;
   setLanguage: (language: string) => void;
   setSpinSpeed: (speed: SpinSpeed) => void;
   setTruthQuestionType: (type: TruthQuestionType) => void;
@@ -36,6 +38,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [theme, setTheme] = useState<Theme>(Themes.Light);
   const [numOfTruth, setNumOfTruth] = useState<number>(3);
   const [numOfDare, setNumOfDare] = useState<number>(2);
+  const [includeEasierQuestions, setIncludeEasierQuestions] = useState<IncludeEasierQuestions>(DoesIncludeEasierQuestions.Yes);
 
   useEffect(() => {
     const varLan = getLanguageSetting(language);
@@ -64,6 +67,8 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
         truthQuestionType,
         dareHardness,
         theme,
+        includeEasierQuestions,
+        setIncludeEasierQuestions,
         setLanguage,
         setSpinSpeed,
         setTruthQuestionType,

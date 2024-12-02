@@ -7,9 +7,13 @@
     "pleaseSelectLanguage": "请选择您的语言",
     "alertPlayerCount": "请输入3到20之间的整数以开始游戏",
 
+    "next": "下一个",
+    "close": "关闭",
+
     "language": "语言",
     "rouletteSpinSpeed": "转盘旋转速度",
     "truthQuestionLevel": "真心话问题难度",
+    "includeEasierQuestions": "选择高难度问题时，同时包含更低难度问题",
     "dareQuestionLevel": "大冒险问题难度",
     "numOfTruthOptions": "真心话选项数量",
     "numOfDareOptions": "大冒险选项数量",
@@ -37,6 +41,8 @@
     "hard" : "困难",
     "light" : "浅色",
     "dark" : "深色",
+    "yes": "是",
+    "no": "否",
     "resetPlayers": "重置玩家数量",
     "resetSettings": "重置设置",
     "questionPlaceholder": "点击\"真心话\"或\"大冒险\"以抽取问题!"

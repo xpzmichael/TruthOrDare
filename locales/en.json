@@ -7,10 +7,14 @@
     "pleaseSelectLanguage": "Please Select a Language",
     "alertPlayerCount": "Please enter a number from 3 to 20 to start the game",
 
+    "next": "Next",
+    "close": "Close",
+
     "language": "Language",
     "rouletteSpinSpeed": "Roulette Spin Speed",
     "truthQuestionLevel": "Truth Question Level",
     "dareQuestionLevel": "Dare Question Level",
+    "includeEasierQuestions": "Include Easier Questions When Hard Selected",
     "numOfTruthOptions": "Number of Truth Options",
     "numOfDareOptions": "Number of Dare Options",
     "theme": "Theme",
@@ -37,6 +41,8 @@
     "hard" : "Hard",
     "light" : "Light",
     "dark" : "Dark",
+    "yes": "Yes",
+    "no": "No",
     "resetPlayers": "Reset Players",
     "resetSettings": "Reset Settings",
     "questionPlaceholder": "Press \"Truth\" or \"Dare\" to get a question!"

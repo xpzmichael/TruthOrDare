@@ -9,7 +9,6 @@ export const LibraryColors = {
   BACKGROUND_DARK: '#a0a0a0',
 }
 
-// Colors for TabsLayout.tsx
 export const TabsLayoutColors = {
   TAB_BAR_ACTIVE_TINT: '#ffd33d',
   HEADER_BACKGROUND: '#25292e',
@@ -22,6 +21,7 @@ export const ModalColors = {
   MODAL_OPTION_ACTIVE: '#868a9e',
   BUTTON_BACKGROUND: '#2688cf',
   BUTTON_TEXT: '#ffffff',
+  TIPS_BUTTON_BACKGROUND: '#3f3b37',
 }
 
 // Colors for StartButton.tsx

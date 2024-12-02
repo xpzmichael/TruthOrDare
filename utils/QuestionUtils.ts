@@ -34,6 +34,16 @@ export async function loadQuestins(
 }
 
 
+export function getRandomQuestionsExactTier(questionsNeeded: number, questions: string[]): string[] {
+  const result = new Set<string>();
+  const length = questions.length;
+  while (result.size < questionsNeeded && result.size < length) {
+    const randomNum = Math.floor(Math.random() * length);
+    result.add(questions[randomNum]);
+  }
+  return Array.from(result);
+}
+
 export function getRandomQuestions(questionType: TruthQuestionType | DareHardness, questionsNeeded: number, 
   tier1: string[], tier2: string[], tier3: string[]): string[] {
   const tier1Count = tier1.length;

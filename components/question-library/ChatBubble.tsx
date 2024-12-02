@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { View, LayoutChangeEvent, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import Svg, { Path, Text, TSpan } from 'react-native-svg';
 import Animated, {
   useAnimatedStyle,
@@ -15,39 +15,36 @@ interface ChatBubbleProps {
   content: string;
   blurred: boolean;
   selected: boolean;
+  chatWidth: number;
+  chatHeight: number;
 }
 
-const ChatBubble: React.FC<ChatBubbleProps> = ({ content, blurred, selected }) => {
-  const [aspectRatio, setAspectRatio] = useState(1);
+const ChatBubble: React.FC<ChatBubbleProps> = ({ content, blurred, selected, chatWidth, chatHeight }) => {
   const sizeRatio = useSizeRatio();
+  const aspectRatio = chatHeight !== 0 ? chatWidth / chatHeight : 1;
   const { language } = useSettings();
-  const scale = useSharedValue(1);
+  const sharedWidth = useSharedValue(1); 
 
   useEffect(() => {
-    scale.value = getScale();
-  }, [blurred, selected]);
+    const newWidth = getWidth();
+    sharedWidth.value = newWidth; 
+  }, [selected, blurred, chatWidth]);
 
-  const onLayout = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setAspectRatio(width / height);
-  };
 
-  const getScale = useCallback(() => {
+  const getWidth = useCallback(() => {
     if (selected) {
-      return 1.1;
+      return 1 * chatWidth;  // Increase width when selected
     }
     if (blurred) {
-      return 0.8;
+      return 0.7 * chatWidth;   // Decrease width when blurred
     }
-    return 1;
-  }, [selected, blurred]);
+    return 0.9 * chatWidth;     // Default width
+  }, [selected, blurred, chatWidth]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { scale: withSpring(scale.value, { damping: 12, stiffness: 150 }) }
-    ],
+    width: withSpring(sharedWidth.value, { damping: 13, stiffness: 150 }),
+    height: withSpring(sharedWidth.value / aspectRatio, { damping: 13, stiffness: 150 }),
   }));
-
 
   const getPath = () => {
     const width = 100 * aspectRatio;
@@ -71,7 +68,8 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ content, blurred, selected }) =
     , [content, aspectRatio]);
 
   return (
-    <Animated.View style={[{ flex: 1 }, animatedStyle]} onLayout={onLayout}>
+    <View className='w-full h-full flex items-center justify-center'>
+    <Animated.View style={[{ flex: 1 }, animatedStyle]}>
       <Svg
         height="100%"
         width="100%"
@@ -84,8 +82,8 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ content, blurred, selected }) =
           strokeWidth="2"
         />
         <Text
-          x="50%"
-          y="10%"
+          x="50"
+          y="10"
           textAnchor="middle"
           alignmentBaseline="middle"
           fill={ChatBubbleColors.TEXT_FILL}
@@ -98,6 +96,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ content, blurred, selected }) =
         </Text>
       </Svg>
     </Animated.View>
+    </View>
   );
 };
 

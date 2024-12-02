@@ -1,6 +1,6 @@
 import { TruthQuestionType, TruthQuestionTypes } from '@/constants/SettingsEnums';
 import { DareHardness, DareHardnesses } from '@/constants/SettingsEnums';
-import { getRandomQuestions, loadTextFile } from '../../utils/QuestionUtils';
+import { getRandomQuestions, getRandomQuestionsExactTier, loadTextFile } from '../../utils/QuestionUtils';
 
 const DEVIDER_LINE_MAX_LENGTH = 5;
 
@@ -81,11 +81,19 @@ class QuestionDatabase {
       this.truthQuestionsMap.get(TruthQuestionTypes.Sensitive) || []);
   }
 
+  public getTruthQuestionsExactTier(questionType: TruthQuestionType, questionsNeeded: number): string[] {
+    return getRandomQuestionsExactTier(questionsNeeded, this.truthQuestionsMap.get(questionType) || []);
+  }
+
   public getDareQuestions(dareType: DareHardness, questionsNeeded: number): string[] {
     return getRandomQuestions(dareType, questionsNeeded, 
       this.dareQuestionsMap.get(DareHardnesses.Easy) || [], 
       this.dareQuestionsMap.get(DareHardnesses.Medium) || [], 
       this.dareQuestionsMap.get(DareHardnesses.Hard) || []);
+  }
+
+  public getDareQuestionsExactTier(dareType: DareHardness, questionsNeeded: number): string[] {
+    return getRandomQuestionsExactTier(questionsNeeded, this.dareQuestionsMap.get(dareType) || []);
   }
 }
 

@@ -8,6 +8,7 @@ import useSizeRatio from '@/hooks/UseSizeRatio';
 import { getSpinnerDelay } from '../../utils/GetSpinnerSpeed';
 import { useSpinnerContext } from '@/hooks/SpinnerContext';
 import TopButtons from './TopButtons';
+import { Tips } from '../modal/Tips';
 
 interface SpinnerGameProps {
   numElements: number;
@@ -16,8 +17,8 @@ interface SpinnerGameProps {
 const SpinnerGame: React.FC<SpinnerGameProps> = ({ numElements }) => {
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
 
-  const { highlightedIndex, circleContainerWidth, setHighlightedIndex, setBallWidth, setCircleContainerWidth,
-    setCircleContainerBorderWidth, setRadius, setNumElements } = useSpinnerContext();
+  const { highlightedIndex, circleContainerWidth, showTips, setHighlightedIndex, setBallWidth, setCircleContainerWidth,
+    setCircleContainerBorderWidth, setRadius, setNumElements, setShowTips } = useSpinnerContext();
 
   const lastRoundIndexRef = useRef<number>(highlightedIndex);
   const { spinSpeed } = useSettings();
@@ -85,6 +86,7 @@ const SpinnerGame: React.FC<SpinnerGameProps> = ({ numElements }) => {
 
   return (
     <View className="flex justify-center items-center pb-12" style={{ width: circleContainerWidth }}>
+      {showTips && <Tips visible={true} onClose={() => { setShowTips(false) }} />}
       <TopButtons />
       <Spinner />
       <View className='flex justify-center -z-10 items-center border border-black' style={{ width: circleContainerWidth }}>
