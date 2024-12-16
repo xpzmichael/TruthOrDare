@@ -21,7 +21,7 @@ const SpinnerBall: React.FC<SpinnerBallProps> = ({
 
   useEffect(() => {
     resetPosition();
-  }, [reset, numElements]);
+  }, [reset, numElements, ballWidth]);
 
   useEffect(() => {
     setBallColor(
@@ -44,7 +44,7 @@ const SpinnerBall: React.FC<SpinnerBallProps> = ({
     translateX.value = withSpring(initialX);
     translateY.value = withSpring(initialY);
     width.value = withSpring(ballWidth);  // Reset width to original size
-  }, [numElements]);
+  }, [numElements, ballWidth]);
 
   // Animated styles
   const animatedStyle = useAnimatedStyle(() => ({

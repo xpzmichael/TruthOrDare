@@ -38,7 +38,7 @@ const SpinnerGame: React.FC<SpinnerGameProps> = ({ numElements }) => {
     setRadius(spinnerCircleRadius);
     setCircleContainerWidth(circleContainerWidth);
     setCircleContainerBorderWidth(circleContainerBorderWidth);
-  }, [numElements]);
+  }, [numElements, sizeRatio]);
 
 
   useEffect(() => {
